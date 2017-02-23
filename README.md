@@ -21,6 +21,8 @@ Supports the following Operating Systems:
 * Ubuntu 14.04
 * Ubuntu 16.04
 
+CentOs 6 is not tested yes for config
+
 ## Requirements
 
 This role requires Ansible 2.0.0 or higher. Requirements are listed in the metadata file.
