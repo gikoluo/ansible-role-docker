@@ -31,6 +31,8 @@ This role requires Ansible 2.0.0 or higher. Requirements are listed in the metad
 |----------|----------|---------|---------|----------|
 | `storage_driver` | No | `None` | <ul><li>devicemapper</li><li>aufs</li></ul> | The name of the storage driver for docker. |
 | `block_device` | No | `None` | <ul><li>/dev/sda3, etc.</li></ul> | The device name used for the storage driver. |
+| `docker_group_members` | No | `None` | <ul><li>username, etc.</li></ul> | The user, except root, who wants to operation the docker and container. root is not suggested to used as an operation user. |
+| `daemon_settings` | No | `None` | <ul><li>daemon settings.</li></ul> | The Daemon settings for docker start. for chinese user, it is suggested to add a registy, see ex below. |
 
 ## Example Playbook
 
@@ -41,6 +43,14 @@ Install docker to your machine.
          - role: avinetworks.docker
            storage_driver: devicemapper
            block_device: /dev/sda3
+           docker_group_members:
+             - "ops"
+           daemon_settings:
+              registry-mirrors:
+                - "http://99c6e2d5.m.daocloud.io"
+              hosts:
+                - "tcp://0.0.0.0:2375"
+                - "unix:///var/run/docker.sock"
 
 ## License
 

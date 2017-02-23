@@ -1,5 +1,10 @@
 ---
 
+
+- file:
+    dest: "{{ docker_cfg_dest | dirname }}"
+    state: directory
+
 - name: Debian files are present in CentOS
   template:
     src: "{{ docker_cfg }}"
@@ -14,13 +19,11 @@
     state: "present"
     regexp: "^ExecStart=/usr/bin/dockerd"
     line: "ExecStart=/usr/bin/dockerd --config-file={{ docker_cfg_dest }}"
-  when: copy_result|changed and ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   register: config_result
   tags: [docker]
 
 
 - name: Reload systemd
   command: systemctl daemon-reload  
-  when: config_result|changed and ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  when: config_result|changed
   tags: [docker]
-  
