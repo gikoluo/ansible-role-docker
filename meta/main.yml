@@ -9,7 +9,6 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-    - 6
     - 7
   - name: Fedora
     versions:
@@ -18,8 +17,6 @@ galaxy_info:
     - 24
   - name: Ubuntu
     versions:
-    - precise
-    - trusty
     - wily
     - xenial
   - name: Debian
