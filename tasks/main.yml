@@ -10,5 +10,8 @@
 - name: Docker | Start Installation
   include: "{{ ansible_pkg_mgr }}.yml"
 
+- name: Docker | Configure
+  include: "config.yml"
+
 - name: Docker | Start the Docker Process and Start at Boot
   service: name=docker enabled=yes state=started

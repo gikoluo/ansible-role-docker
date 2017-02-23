@@ -1,0 +1,26 @@
+---
+
+- name: Debian files are present in CentOS
+  template:
+    src: "{{ docker_cfg }}"
+    dest: "{{ docker_cfg_dest }}"
+  register: copy_result
+  notify: Docker | Restart Docker
+  tags: [docker]
+
+- name: Dock Config in CentOS
+  lineinfile: 
+    dest: "/lib/systemd/system/docker.service"
+    state: "present"
+    regexp: "^ExecStart=/usr/bin/dockerd"
+    line: "ExecStart=/usr/bin/dockerd --config-file={{ docker_cfg_dest }}"
+  when: copy_result|changed and ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  register: config_result
+  tags: [docker]
+
+
+- name: Reload systemd
+  command: systemctl daemon-reload  
+  when: config_result|changed and ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags: [docker]
+  
